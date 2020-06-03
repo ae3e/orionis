@@ -1,0 +1,115 @@
+<svg>
+    <symbol id="global-map">
+    <!-- <g id="group1" transform="translate(174, 87)">
+      <g id="group" transform="rotate(0)">
+      <g id="group2" transform="translate(-174, -87)"> -->
+    <g id="group1" transform="translate(174, 125)">
+      <g id="group" transform="rotate(0)">
+      <g id="group2" transform="translate(-174, -125)">
+        <rect id="background" width="100%" height="100%" fill="black" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+        <line x1="0" y1="0" x2="0" y2="0" fill="white" stroke-width="3" />
+      </g>
+      </g>
+      </g>
+      <circle cx="0" cy="0" r="6" fill="red"/>
+    </symbol>
+</svg>
