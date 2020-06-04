@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="styles.css" />
+<svg id="view-config" display="none">
+  <image href="images/bg.png" opacity=".2" />
+
+  <use id="subview-clock3" href="#subview-clock" />
+
+  <text id="lblTi">exerciseType </text>
+  <use id="type-cycle" href="#cycleview">
+    <use href="#cycleview-item" class="cycle-item">
+      <text>run</text>
+    </use>
+    <use href="#cycleview-item" class="cycle-item">
+      <text>cycling</text>
+    </use>
+    <use href="#cycleview-item" class="cycle-item">
+      <text>hiking</text>
+    </use>
+  </use>
+
+  <use id="btnOK" href="#combo-button-lower-right" fill="fb-yellow" shortcut="none">
+    <set href="combo-button-icon" attributeName="href"
+          to="images/icons/btn_combo_play_press_p.png" />
+    <set href="combo-button-icon-press" attributeName="href"
+          to="images/icons/btn_combo_play_press_p.png" />
+    <set href="combo-button-stroke" attributeName="display" to="inline" />
+  </use>
+</svg>

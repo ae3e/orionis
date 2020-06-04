@@ -15,7 +15,11 @@
     "wipeColor": "#ffffff",
     "requestedPermissions": [
       "access_location",
-      "access_internet"
+      "access_internet",
+      "access_activity",
+      "access_exercise",
+      "access_heart_rate",
+      "access_user_profile"
     ],
     "buildTargets": [
       "higgs"

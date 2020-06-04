@@ -1,18 +1,7 @@
 <svg>
-  <use id="container" href="#panoramaview">
-    <use id="ionic" href="#panoramaview-item">
-      <use id="my-global-map" href="#global-map" />
-            
-    </use>
-    <use id="item2" href="#panoramaview-item">
-      <use id="my-local-map" href="#global-map" />
-    </use>
-
-    <!-- Have enough pagination dots for your slides (extras are hidden) -->
-    <use id="pagination-dots" href="#pagination-widget" y="8">
-      <use href="#pagination-dot" />
-      <use href="#pagination-dot" />
-      <use href="#pagination-highlight-dot" />
-    </use>
-  </use>
+  <link rel="import" href="views/select/index.gui" />
+  <link rel="import" href="views/exercise/index.gui" />
+  <link rel="import" href="views/end/index.gui" />
+  <link rel="import" href="views/config/index.gui" />
 </svg>
+

@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="styles.css" />
+<svg id="view-select" display="none">
+  <image href="images/bg.png" />
+
+  <text id="lblTitle">Exercise Name</text>
+
+  <!-- TOP LEFT -->
+  <use id="btnConfig" href="#combo-button-upper-left" fill="fb-red">
+    <set href="combo-button-icon" attributeName="href" to="images/icons/btn_combo_play_press_p.png"/>
+    <set href="combo-button-icon-press" attributeName="href" to="images/icons/btn_combo_play_press_p.png"/>
+  </use>
+
+  <use id="btnStart" href="#combo-button-lower-right" fill="fb-yellow" shortcut="none">
+    <set href="combo-button-icon" attributeName="href"
+          to="images/icons/btn_combo_play_press_p.png" />
+    <set href="combo-button-icon-press" attributeName="href"
+          to="images/icons/btn_combo_play_press_p.png" />
+    <set href="combo-button-stroke" attributeName="display" to="inline" />
+  </use>
+</svg>
