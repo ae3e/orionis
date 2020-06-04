@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="styles.css" />
 <svg id="view-end" display="none">
-  <image href="images/bg.png" opacity=".7" />
+  <image href="images/bg.png" opacity=".2" />
 
   <use id="subview-clock2" href="#subview-clock" />
 

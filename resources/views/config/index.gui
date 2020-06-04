@@ -4,24 +4,24 @@
 
   <use id="subview-clock3" href="#subview-clock" />
 
-  <text id="lblTi">exerciseType </text>
+  <text id="lblTi">Select an exercise type </text>
   <use id="type-cycle" href="#cycleview">
     <use href="#cycleview-item" class="cycle-item">
-      <text>run</text>
+      <text>Run</text>
     </use>
     <use href="#cycleview-item" class="cycle-item">
-      <text>cycling</text>
+      <text>Cycling</text>
     </use>
     <use href="#cycleview-item" class="cycle-item">
-      <text>hiking</text>
+      <text>Hiking</text>
     </use>
   </use>
 
-  <use id="btnOK" href="#combo-button-lower-right" fill="fb-yellow" shortcut="none">
+  <use id="btnOK" href="#combo-button-lower-right" fill="fb-green" shortcut="none">
     <set href="combo-button-icon" attributeName="href"
-          to="images/icons/btn_combo_play_press_p.png" />
+          to="images/icons/btn_combo_check_p.png" />
     <set href="combo-button-icon-press" attributeName="href"
-          to="images/icons/btn_combo_play_press_p.png" />
+          to="images/icons/btn_combo_check_press_p.png" />
     <set href="combo-button-stroke" attributeName="display" to="inline" />
   </use>
 </svg>

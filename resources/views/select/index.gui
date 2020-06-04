@@ -1,20 +1,20 @@
 <link rel="stylesheet" href="styles.css" />
 <svg id="view-select" display="none">
-  <image href="images/bg.png" />
+  <image href="images/bg.png" opacity=".7"/>
 
   <text id="lblTitle">Exercise Name</text>
 
   <!-- TOP LEFT -->
-  <use id="btnConfig" href="#combo-button-upper-left" fill="fb-red">
-    <set href="combo-button-icon" attributeName="href" to="images/icons/btn_combo_play_press_p.png"/>
-    <set href="combo-button-icon-press" attributeName="href" to="images/icons/btn_combo_play_press_p.png"/>
+  <use id="btnConfig" href="#combo-button-upper-left" fill="fb-white">
+    <set href="combo-button-icon" attributeName="href" to="images/icons/btn_combo_cog_p.png"/>
+    <set href="combo-button-icon-press" attributeName="href" to="images/icons/btn_combo_cog_press_p.png"/>
   </use>
 
   <use id="btnStart" href="#combo-button-lower-right" fill="fb-yellow" shortcut="none">
     <set href="combo-button-icon" attributeName="href"
-          to="images/icons/btn_combo_play_press_p.png" />
+          to="images/icons/btn_combo_next_p.png" />
     <set href="combo-button-icon-press" attributeName="href"
-          to="images/icons/btn_combo_play_press_p.png" />
+          to="images/icons/btn_combo_next_press_p.png" />
     <set href="combo-button-stroke" attributeName="display" to="inline" />
   </use>
 </svg>

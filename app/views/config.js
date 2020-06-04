@@ -15,11 +15,11 @@ export class ViewConfig extends View {
 
   handleBack = () => {
     let container = document.getElementById("type-cycle");
-
+    let exercisTypes=['run','cycling','hiking']
     // Get the selected index
     let currentIndex = container.value;
     console.log(currentIndex);
-    config.changeExerciseType('Bike');
+    config.changeExerciseType(exercisTypes[currentIndex]);
     Application.switchTo("ViewSelect");
   }
 

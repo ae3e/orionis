@@ -37,7 +37,7 @@ export class ViewSelect extends View {
   }
 
   onRender() {
-    this.lblTitle.text = config.exerciseType;
+    this.lblTitle.text = config.exerciseType.charAt(0).toUpperCase() + config.exerciseType.slice(1);
   }
 
   onUnmount() {
