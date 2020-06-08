@@ -139,101 +139,60 @@ export class ViewExercise extends View {
       this.prevPosition = currentPosition
     }
     //local map
-    let distance= this.data.maxDistance + 2 ;
-    let bbox=[screenPosition[0][0]-distance,screenPosition[0][0]+distance,screenPosition[0][1]-distance,screenPosition[0][1]+distance]
+    console.log('factor: '+JSON.stringify(this.data.stats))
+    let distance= this.data.stats.scale*500;//500m around my position ;
 
-    //Filtered points in bbox screen plus or minus the distance (6: defined arbitrary).
-    //Take a larger area to be able to rotate using orientation calculated with GPS (No compass on Ionic)
-      let filtered = this.data.screenCoords.map((elt,i)=>{return [elt[0],elt[1],i];}).filter((elt,i)=>{
-        if(elt[0]>bbox[0] && elt[0]<bbox[1] && elt[1]>bbox[2] && elt[1]<bbox[3]){
-          return true;
-        }else{
-          return false;
-        }
-      })
-      console.log(filtered.length)
-      //console.log(filtered)
-      /*
-      If at least one point is returned
-      1. Get first and last index then add one point before and one after (only if it's not the first (0) or the last)
-      [2,3,17,18] => [1,2,3,17,18,19]
-      2. Find if points are contiguous and add one more points
-      [1,2,3,17,18,19] => [1,2,3,4,16,17,18,19]
-      otherwise remove drawing of route
-      */
-      if(filtered.length>0){
-        let k=0;
-        if(filtered[0][2]!=0){
-          let first = [this.data.screenCoords[filtered[0][2]-1][0],this.data.screenCoords[filtered[0][2]-1][1],filtered[0][2]-1]
-          filtered.unshift(first);
-        }else{
-          k=1;
-        }
-        if(filtered[filtered.length-1][2]!=this.data.screenCoords.length-1){
-          let last = [this.data.screenCoords[filtered[filtered.length-1][2]+1][0],this.data.screenCoords[filtered[filtered.length-1][2]+1][1],filtered[filtered.length-1][2]+1]
-          filtered.push(last)
-        }
-        
-        while(k<filtered.length-1){
-          //console.log('k: '+k);
-          //console.log('length '+filtered.length);
-          //console.log(JSON.stringify(filtered))
-          if(filtered[k][2]+1!=filtered[k+1][2]){
-            //console.log(filtered[k][2]+" "+filtered[k+1][2])
-            let after = [this.data.screenCoords[filtered[k][2]+1][0],this.data.screenCoords[filtered[k][2]+1][1],filtered[k][2]+1];
-            let before = [this.data.screenCoords[filtered[k+1][2]-1][0],this.data.screenCoords[filtered[k+1][2]-1][1],filtered[k+1][2]-1];
-            filtered.splice(k+1,0,after,before)
-            k=k+2;
-          }else{
-            k++
-          }
-        }
-  
-        let transformedScreenCoords = filtered.map(elt=>{
-          return transformScreenCoords(elt,screenPosition,distance)
-        })
-  
-        
-        let lines2 = document.getElementById("item2").getElementsByTagName("line");
-        lines2.forEach(line=>{
-          line.x1=0;
-          line.y1=0;
-          line.x2=0;
-          line.y2=0;
-        })
-        
-        let sc2 = transformedScreenCoords.filter((elt,i,arr)=>i%(parseInt(arr.length/100)+1)===0);
-        //console.log(sc2)
-        //console.log(sc2[0])
-        //console.log(sc2.length)
-        for(let i=0;i<sc2.length-1;i++){
-          if(sc2[i][2]+1===sc2[i+1][2]){
-            lines2[i].x1=sc2[i][0];
-            lines2[i].y1=sc2[i][1];
-            lines2[i].x2=sc2[i+1][0];
-            lines2[i].y2=sc2[i+1][1];
-          }
-        }
+    //bbox as xmin,ymin,xmax,ymax
+    let bbox=[screenPosition[0][0]-distance,screenPosition[0][1]-distance,screenPosition[0][0]+distance,screenPosition[0][1]+distance]
 
-        let circle = document.getElementById("item2").getElementsByTagName("circle");
-        circle[0].cx=174;
-        circle[0].cy=125;
-        let group = document.getElementById("item2").getElementById("group");
-        //console.log(group.groupTransform.rotate.angle)
-        group.groupTransform.rotate.angle = -this.angle
-
-        let group = document.getElementById("ionic").getElementById("group");
-        //console.log(group.groupTransform.rotate.angle)
-        //group.groupTransform.rotate.angle = 90
-      }else{
-        let lines2 = document.getElementById("item2").getElementsByTagName("line");
-        lines2.forEach(line=>{
-          line.x1=0;
-          line.y1=0;
-          line.x2=0;
-          line.y2=0;
-        })
+    let lines = [];
+    this.data.screenCoords.forEach((elt,i,arr)=>{
+      if(i>0){
+        lineclip([arr[i],arr[i-1]], bbox, lines);
       }
+    })
+
+    let transformedScreenLines = lines.map(elt=>{
+      return [transformScreenCoords(elt[0],screenPosition,distance),transformScreenCoords(elt[1],screenPosition,distance)]
+    })
+    
+    let lines2 = document.getElementById("item2").getElementsByTagName("line");
+    lines2.forEach(line=>{
+      line.x1=0;
+      line.y1=0;
+      line.x2=0;
+      line.y2=0;
+    })
+    
+    //console.log(sc2)
+    //console.log(sc2[0])
+    //console.log(sc2.length)
+    if(lines.length>0){
+      for(let i=0;i<transformedScreenLines.length;i++){
+        lines2[i].x1=transformedScreenLines[i][0][0];
+        lines2[i].y1=transformedScreenLines[i][0][1];
+        lines2[i].x2=transformedScreenLines[i][1][0];
+        lines2[i].y2=transformedScreenLines[i][1][1];
+      }
+      let circle = document.getElementById("item2").getElementsByTagName("circle");
+      circle[0].cx=174;
+      circle[0].cy=125;
+      let group = document.getElementById("item2").getElementById("group");
+      //console.log(group.groupTransform.rotate.angle)
+      group.groupTransform.rotate.angle = -this.angle
+
+      let group = document.getElementById("ionic").getElementById("group");
+      //console.log(group.groupTransform.rotate.angle)
+      //group.groupTransform.rotate.angle = 90
+    }else{
+      let lines2 = document.getElementById("item2").getElementsByTagName("line");
+      lines2.forEach(line=>{
+        line.x1=0;
+        line.y1=0;
+        line.x2=0;
+        line.y2=0;
+      })
+    }
   };
 
   handleRefresh = () => {
@@ -355,4 +314,88 @@ export class ViewExercise extends View {
 
 function transformScreenCoords (elt,screenPosition,zoom){
   return [((elt[0]-screenPosition[0][0])*348/(zoom*2)+174),((elt[1]-screenPosition[0][1])*348/(zoom*2)+125),elt[2]]
+}
+
+// Cohen-Sutherland line clippign algorithm, adapted to efficiently
+// handle polylines rather than just segments
+
+function lineclip(points, bbox, result) {
+
+  var len = points.length,
+      codeA = bitCode(points[0], bbox),
+      part = [],
+      i, a, b, codeB, lastCode;
+
+  if (!result) result = [];
+
+  for (i = 1; i < len; i++) {
+      a = points[i - 1];
+      b = points[i];
+      codeB = lastCode = bitCode(b, bbox);
+
+      while (true) {
+
+          if (!(codeA | codeB)) { // accept
+              part.push(a);
+
+              if (codeB !== lastCode) { // segment went outside
+                  part.push(b);
+
+                  if (i < len - 1) { // start a new line
+                      result.push(part);
+                      part = [];
+                  }
+              } else if (i === len - 1) {
+                  part.push(b);
+              }
+              break;
+
+          } else if (codeA & codeB) { // trivial reject
+              break;
+
+          } else if (codeA) { // a outside, intersect with clip edge
+              a = intersect(a, b, codeA, bbox);
+              codeA = bitCode(a, bbox);
+
+          } else { // b outside
+              b = intersect(a, b, codeB, bbox);
+              codeB = bitCode(b, bbox);
+          }
+      }
+
+      codeA = lastCode;
+  }
+
+  if (part.length) result.push(part);
+
+  return result;
+}
+
+// intersect a segment against one of the 4 lines that make up the bbox
+
+function intersect(a, b, edge, bbox) {
+  return edge & 8 ? [a[0] + (b[0] - a[0]) * (bbox[3] - a[1]) / (b[1] - a[1]), bbox[3]] : // top
+         edge & 4 ? [a[0] + (b[0] - a[0]) * (bbox[1] - a[1]) / (b[1] - a[1]), bbox[1]] : // bottom
+         edge & 2 ? [bbox[2], a[1] + (b[1] - a[1]) * (bbox[2] - a[0]) / (b[0] - a[0])] : // right
+         edge & 1 ? [bbox[0], a[1] + (b[1] - a[1]) * (bbox[0] - a[0]) / (b[0] - a[0])] : // left
+         null;
+}
+
+// bit code reflects the point position relative to the bbox:
+
+//         left  mid  right
+//    top  1001  1000  1010
+//    mid  0001  0000  0010
+// bottom  0101  0100  0110
+
+function bitCode(p, bbox) {
+  var code = 0;
+
+  if (p[0] < bbox[0]) code |= 1; // left
+  else if (p[0] > bbox[2]) code |= 2; // right
+
+  if (p[1] < bbox[1]) code |= 4; // bottom
+  else if (p[1] > bbox[3]) code |= 8; // top
+
+  return code;
 }
