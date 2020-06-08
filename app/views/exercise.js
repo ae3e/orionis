@@ -2,7 +2,6 @@ import document from "document";
 import exercise from "exercise";
 
 import * as config from "../config";
-import Cycle from "../lib/cycle"
 import { Application, View, $at } from "../lib/view";
 import * as utils from "../lib/utils";
 import Clock from "../subviews/clock";
@@ -27,8 +26,8 @@ export class ViewExercise extends View {
   lblSpeedUnits = $("#lblSpeedUnits");
   lblSpeedAvg = $("#lblSpeedAvg");
   lblSpeedAvgUnits = $("#lblSpeedAvgUnits");
-  lblSpeedMax = $("#lblSpeedMax");
-  lblSpeedMaxUnits = $("#lblSpeedMaxUnits");
+  lblPace = $("#lblPace");
+  lblPaceUnits = $("#lblPaceUnits");
   lblDistance = $("#lblDistance");
   lblDistanceUnits = $("#lblDistanceUnits");
   lblActiveTime = $("#lblActiveTime");
@@ -247,8 +246,6 @@ export class ViewExercise extends View {
       case "back":
         if (exercise.state === "stopped") {
           this.handleCancel();
-        } else {
-          this.cycle.next();
         }
         break;
       case "up":
@@ -303,8 +300,6 @@ export class ViewExercise extends View {
     this.gps = new GPS("#subview-gps2", this.handleLocationSuccess);
     this.insert(this.gps);
 
-    this.cycle = new Cycle(this.elBoxStats);
-
     this.btnToggle.addEventListener("click", this.handleToggle);
     this.btnFinish.addEventListener("click", this.handleFinish);
     document.addEventListener("keypress", this.handleButton);
@@ -321,22 +316,34 @@ export class ViewExercise extends View {
       this.lblSpeedAvg.text = speedAvg.value;
       this.lblSpeedAvgUnits.text = `speed avg ${speedAvg.units}`;
 
-      const speedMax = utils.formatSpeed(exercise.stats.speed.max);
-      this.lblSpeedMax.text = speedMax.value;
-      this.lblSpeedMaxUnits.text = `speed max ${speedMax.units}`;
+      let sec = Math.round(3600/speed.value);
+      
+
+      //Math.trunc doesn't work??
+      const trunc = (n, decimalPlaces) => {
+        const decimals = decimalPlaces ? decimalPlaces : 2;
+        const asString = n.toString();
+        const pos = asString.indexOf('.') != -1 ? asString.indexOf('.') + decimals + 1 : asString.length;
+        return parseFloat(n.toString().substring(0, pos));
+      };
+
+      let min = (sec/60).toString().split('.')[0];
+
+      const pace = {value: min+':'+(sec-min*60), units:"mpk"};
+      this.lblPace.text = pace.value;
+      this.lblPaceUnits.text = `pace ${pace.units}`;
 
       const distance = utils.formatDistance(exercise.stats.distance);
       this.lblDistance.text = distance.value;
-      this.lblDistanceUnits.text = `distance ${distance.units}`;
+      this.lblDistanceUnits.text = `distance ${distance.units==='kilometers'?'km':'miles'}`;
 
       this.lblActiveTime.text = utils.formatActiveTime(exercise.stats.activeTime);
 
-      this.lblCalories.text = utils.formatCalories(exercise.stats.calories);
+      //this.lblCalories.text = utils.formatCalories(exercise.stats.calories);
     }
   }
 
   onUnmount() {
-    this.cycle.removeEvents();
 
     this.btnToggle.removeEventListener("click", this.handleToggle);
     this.btnFinish.removeEventListener("click", this.handleFinish);

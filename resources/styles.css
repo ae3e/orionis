@@ -30,32 +30,31 @@ text {
 
 #lblClock {
   x: 50%;
-  y: 32;
+  y: 30;
   font-size: 28;
   text-length: 8;
   text-anchor: middle;
 }
 
 .bignumber {
-  font-size: 120;
+  font-size: 48;
   font-family: System-Light;
   fill: fb-yellow;
   x: -4;
-  y: 84;
-  height: 110;
+  height: 40;
   text-length: 20;
 }
 
 .label {
-  font-size: 30;
+  font-size: 16;
   fill: fb-yellow;
   text-length: 66;
 }
 
 .item .label {
-  y: $-80;
+  y: $-22;
 }
 
 #subview-hrm .label {
-  y: $-80;
+  y: $-22;
 }

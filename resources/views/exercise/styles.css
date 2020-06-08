@@ -1,12 +1,28 @@
 #lblStatus {
   x: 8;
-  y: 100%-18;
+  y: 100%-4;
+  font-size: 20;
   text-length: 20;
 }
 
 #boxStats {
   x: 8;
-  y: 30%;
-  width: 100%-16;
-  height: 160;
+  y: 40;
+  width: 50%-8;
+  height: 40;
+}
+
+#boxStats2 {
+  x: 50%+8;
+  y: 40;
+  width: 50%-8;
+  height: 40;
+}
+
+.row1 {
+  y:60
+}
+
+.row2 {
+  y:120
 }
