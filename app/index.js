@@ -27,7 +27,7 @@ function processAllFiles() {
     console.log(text);
     //let MercatorCoords = decodePolyline(JSON.parse(text)).map(elt=>degrees2meters(elt[1],elt[0]));
     //console.log(MercatorCoords[0]);
-    drawRoute();
+    //drawRoute();
   }
 }
 inbox.addEventListener("newfile", processAllFiles);

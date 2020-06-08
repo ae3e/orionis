@@ -44,15 +44,19 @@ async function transferFile(){
   let filteredScreenCoords = convertToScreenCoords(MercatorCoords,stats).filter((elt,i,arr)=>i%(parseInt(arr.length/100)+1)===0);
   console.log(filteredScreenCoords.length);
   let maxDistance= 0;
+  let distances = [];
   filteredScreenCoords.forEach((elt,i,arr)=>{
-    if(i>0 && arr[i][0]!==arr[i-1][0] && arr[i][1]!==arr[i-1][1]){
-      let dist = Math.sqrt(Math.pow(arr[i-1][0]-arr[i][0],2)+Math.pow(arr[i][i-1]-arr[i][1],2))
+    if(i>0){
+      let dist = Math.sqrt(Math.pow(arr[i-1][0]-arr[i][0],2)+Math.pow(arr[i-1][1]-arr[i][1],2))
+      distances.push(dist);
       if(dist>maxDistance){
         maxDistance = dist;
       }
     }
   })
   console.log('maxDistance: '+maxDistance);
+  let average = distances.reduce((a, b) => a + b) / distances.length;
+  console.log('average: '+average)
   let data={
     stats:stats,
     screenCoords:filteredScreenCoords,
