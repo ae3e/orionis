@@ -61,7 +61,7 @@ async function transferFile(){
   let tolerance = 1
   let filteredScreenCoords = simplify(screenCoords,tolerance,true).map(elt=>[elt.x,elt.y])
   while(filteredScreenCoords.length>100){
-    tolerance = tolerance + 0.1
+    tolerance = tolerance + 0.05
     filteredScreenCoords = simplify(screenCoords,tolerance,true).map(elt=>[elt.x,elt.y])
   }
   //let filteredScreenCoords = screenCoords.filter((elt,i,arr)=>i%(parseInt(arr.length/100)+1)===0);
