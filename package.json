@@ -32,6 +32,7 @@
     "debug": "fitbit"
   },
   "dependencies": {
-    "d3": "^5.15.0"
+    "d3": "^5.15.0",
+    "simplify-js": "^1.2.4"
   }
 }

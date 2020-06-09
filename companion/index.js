@@ -3,6 +3,8 @@ import { settingsStorage } from "settings";
 import {degrees2meters, decodePolyline, getStats, convertToScreenCoords} from "../common/lib";
 import { encode } from 'cbor';
 
+import simplify from 'simplify-js'
+
 console.log(settingsStorage.getItem("strava"));
 
 settingsStorage.onchange = function(evt) {
@@ -55,7 +57,14 @@ async function transferFile(){
   console.log(MercatorCoords[0][0]+" "+MercatorCoords[0][1])
   console.log(MercatorCoords[MercatorCoords.length-1][0]+' '+MercatorCoords[MercatorCoords.length-1][1])
   let stats = getStats(MercatorCoords);
-  let filteredScreenCoords = convertToScreenCoords(MercatorCoords,stats).filter((elt,i,arr)=>i%(parseInt(arr.length/100)+1)===0);
+  let screenCoords = convertToScreenCoords(MercatorCoords,stats).map(elt=>{return {x:elt[0],y:elt[1]}});
+  let tolerance = 1
+  let filteredScreenCoords = simplify(screenCoords,tolerance,true).map(elt=>[elt.x,elt.y])
+  while(filteredScreenCoords.length>100){
+    tolerance = tolerance + 0.1
+    filteredScreenCoords = simplify(screenCoords,tolerance,true).map(elt=>[elt.x,elt.y])
+  }
+  //let filteredScreenCoords = screenCoords.filter((elt,i,arr)=>i%(parseInt(arr.length/100)+1)===0);
   console.log(filteredScreenCoords.length);
   let maxDistance= 0;
   let distances = [];
