@@ -6,6 +6,7 @@ import { encode } from 'cbor';
 console.log(settingsStorage.getItem("strava"));
 
 settingsStorage.onchange = function(evt) {
+  console.log(settingsStorage.getItem("strava"));
     console.log(JSON.stringify(evt));
     if(evt.key==='refresh'){
       transferFile();
@@ -33,6 +34,19 @@ settingsStorage.onchange = function(evt) {
 console.log('Hello world!');
 
 async function transferFile(){
+  
+  let strava = JSON.parse(settingsStorage.getItem("strava"))
+  console.log(strava.expires_at);
+  console.log(new Date().getTime()/1000);
+  if(strava.expires_at<new Date().getTime()/1000){
+    console.log('Get a refreshed token');
+    let data = await getRefreshedToken();
+    
+    strava.expires_at = data.expires_at;
+    strava.access_token = data.access_token;
+    strava.refresh_token = data.refresh_token;
+    settingsStorage.setItem("strava",JSON.stringify(strava))
+  }
   
   let routes = await getRoutes()
   let route = await getRoute(routes.filter(elt=>elt.starred)[0].id);
@@ -97,5 +111,23 @@ async function getRoute(id)
     })
   let data = await response.json()
   settingsStorage.setItem('route', JSON.stringify(data))
+  return data;
+}
+
+async function getRefreshedToken() 
+{
+  let strava = JSON.parse(settingsStorage.getItem("strava"));
+  var paramsString = "client_id=42995&client_secret=5fb33c49b44c28dc55ce41aa56f28dec6bd025f4&grant_type=refresh_token&refresh_token="+strava.refresh_token;
+
+  let response = await fetch('https://www.strava.com/api/v3/oauth/token',{
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },  
+    body :new URLSearchParams(paramsString)
+  })
+
+  let data = await response.json()
+  console.log(data)
   return data;
 }
