@@ -275,7 +275,7 @@ export class ViewExercise extends View {
       this.lblSpeedAvg.text = speedAvg.value;
       this.lblSpeedAvgUnits.text = `speed avg ${speedAvg.units}`;
 
-      let sec = Math.round(3600/speed.value);
+      let sec = (speed.value && speed.value>1)?Math.round(3600/speed.value):0;
       
 
       //Math.trunc doesn't work??
@@ -286,7 +286,7 @@ export class ViewExercise extends View {
         return parseFloat(n.toString().substring(0, pos));
       };
 
-      let min = (sec/60).toString().split('.')[0];
+      let min = parseInt((sec/60).toString().split('.')[0]);
 
       const pace = {value: min+':'+(sec-min*60), units:"mpk"};
       this.lblPace.text = pace.value;
