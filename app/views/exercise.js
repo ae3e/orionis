@@ -60,7 +60,7 @@ export class ViewExercise extends View {
         this.handleResume();
         break;
       case 'stopped':
-        exercise.start(config.exerciseName, config.exerciseOptions);
+        exercise.start(config.exerciseType, config.exerciseOptions);
         this.setComboIcon(this.btnToggle, config.icons.pause);
         utils.hide(this.btnFinish);
         break;
