@@ -2,11 +2,11 @@ import { outbox } from "file-transfer"
 import { settingsStorage } from "settings";
 import {degrees2meters, decodePolyline, getStats, convertToScreenCoords} from "../common/lib";
 import { encode } from 'cbor';
-
+import * as env from '../env.js'
 import simplify from 'simplify-js'
 
 console.log(settingsStorage.getItem("strava"));
-
+console.log(env.strava.clientId)
 settingsStorage.onchange = function(evt) {
   console.log(settingsStorage.getItem("strava"));
     console.log(JSON.stringify(evt));

@@ -1,3 +1,4 @@
+import * as env from '../env.js'
 function settingsComponent(props) {
   //https://community.fitbit.com/t5/SDK-Development/3rd-party-REST-API-OAuth-authentication/m-p/2322273#M1706
   return (
@@ -19,8 +20,8 @@ function settingsComponent(props) {
 <StravaLogin
   title="Strava Login"
   settingsKey="strava"
-  clientId="42995"
-  clientSecret="5fb33c49b44c28dc55ce41aa56f28dec6bd025f4"
+  clientId={env.strava.clientId}
+  clientSecret={env.strava.clientSecret}
   onAccessToken={async (accessToken, userInfo) => {
     //console.log(accessToken);
     //console.log(JSON.stringify(userInfo));
