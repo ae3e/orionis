@@ -51,7 +51,8 @@ async function transferFile(){
   }
   
   let routes = await getRoutes()
-  let route = await getRoute(routes.filter(elt=>elt.starred)[0].id);
+  //Use id_str instead of id : https://groups.google.com/forum/#!topic/strava-api/4HkuGf0-_ss
+  let route = await getRoute(routes.filter(elt=>elt.starred)[0].id_str);
 
   let MercatorCoords = decodePolyline(route.map.polyline).map(elt=>degrees2meters(elt[1],elt[0]))
   console.log(MercatorCoords[0][0]+" "+MercatorCoords[0][1])
