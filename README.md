@@ -3,6 +3,8 @@
 
 Navigate a route during an exercise with Fitbit Ionic
 
+Visit url https://gallery.fitbit.com/details/9897b324-9be2-4171-b6bd-f1e978d57298 from your smartphone to install the application (Fitbit app must be already installed).
+
 ## User guide
 
 A Strava account is required.
