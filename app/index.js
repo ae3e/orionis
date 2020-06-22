@@ -21,24 +21,15 @@ function processAllFiles() {
   let fileName;
   while (fileName = inbox.nextFile()) {
     console.log(`/private/data/${fileName} is now available`);
-    
-    let text = readFileSync("polyline.txt", "cbor");
-    //body.text = "Transfered";
-    console.log(text);
-    //let MercatorCoords = decodePolyline(JSON.parse(text)).map(elt=>degrees2meters(elt[1],elt[0]));
-    //console.log(MercatorCoords[0]);
-    //drawRoute();
   }
 }
 inbox.addEventListener("newfile", processAllFiles);
 processAllFiles();
 
+
+/* Later to have multiple routes on the watch
 const listDir = listDirSync("/private/data");
 let dirIter;
 while((dirIter = listDir.next()) && !dirIter.done) {
   console.log(dirIter.value);
-  //drawRoute();
-}
-
-
-console.log('Hello world!');
+}*/

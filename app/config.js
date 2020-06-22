@@ -1,5 +1,3 @@
-export const exerciseName = "run";
-
 export const exerciseOptions = {
   gps: true
 };

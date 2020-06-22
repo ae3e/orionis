@@ -10,7 +10,7 @@ import HRM from "../subviews/hrm";
 import Popup from "../subviews/popup";
 
 import { readFileSync } from "fs";
-import {degrees2meters, decodePolyline, getStats, convertToScreenCoords} from "../../common/lib";
+import {degrees2meters, convertToScreenCoords} from "../../common/lib";
 
 const $ = $at("#view-exercise");
 
@@ -33,12 +33,9 @@ export class ViewExercise extends View {
   lblActiveTime = $("#lblActiveTime");
   lblCalories = $("#lblCalories");
 
-  data = null;
-  
-
-  //var watchID = geolocation.watchPosition(locationSuccess, locationError, { timeout: 60 * 1000 });
-  prevPosition = null;
-  angle = 0;
+  data = null; //data in transfered file
+  prevPosition = null; //used with currentPosition to calculate orientation
+  angle = 0; //used to rotate local map
 
   handlePopupNo = () => {
     this.remove(this.popup);
@@ -91,7 +88,7 @@ export class ViewExercise extends View {
     let popupSettings = {
       title: "End activity?",
       message: `Are you sure you want to finish this ${
-        config.exerciseName
+        config.exerciseType
       } session?`,
       btnLeftLabel: "Cancel",
       btnLeftCallback: this.handlePopupNo,
@@ -109,42 +106,35 @@ export class ViewExercise extends View {
 
   handleLocationSuccess = (position) => {
     utils.show(this.btnToggle);
-    //exercise.start(config.exerciseName, config.exerciseOptions);
+
     this.lblStatus.text = "";
     //this.gps.callback = undefined;
 
 
-
-
-    console.log("Latitude: " + position.coords.latitude +
-                  " Longitude: " + position.coords.longitude);
     let mercatorPosition = degrees2meters(position.coords.longitude,position.coords.latitude)
     let screenPosition = convertToScreenCoords([mercatorPosition],this.data.stats)
 
-
+    //Update position on global map
     let circle = document.getElementById("ionic").getElementsByTagName("circle");
     circle[0].cx=screenPosition[0][0];
     circle[0].cy=screenPosition[0][1];
 
     let currentPosition = [screenPosition[0][0],screenPosition[0][1]]
-    console.log(this.prevPosition)
-    console.log(currentPosition)
     if(this.prevPosition===null){
       this.prevPosition = currentPosition
     }else{
-      //angle = (Math.atan((currentPosition[0]-prevPosition[0])/(currentPosition[1]-prevPosition[1])))*180/Math.PI;
       this.angle = 90 + Math.atan2(currentPosition[1]-this.prevPosition[1],currentPosition[0]-this.prevPosition[0])*180/Math.PI;
-
-      console.log('angle: '+this.angle)
       this.prevPosition = currentPosition
     }
+
     //local map
-    console.log('factor: '+JSON.stringify(this.data.stats))
     let distance= this.data.stats.scale*500;//500m around my position ;
 
     //bbox as xmin,ymin,xmax,ymax
     let bbox=[screenPosition[0][0]-distance,screenPosition[0][1]-distance,screenPosition[0][0]+distance,screenPosition[0][1]+distance]
 
+
+    //Clip lines in the viewport for local map
     let lines = [];
     this.data.screenCoords.forEach((elt,i,arr)=>{
       if(i>0){
@@ -156,6 +146,8 @@ export class ViewExercise extends View {
       return [transformScreenCoords(elt[0],screenPosition,distance),transformScreenCoords(elt[1],screenPosition,distance)]
     })
     
+
+    //Draw local map
     let lines2 = document.getElementById("item2").getElementsByTagName("line");
     lines2.forEach(line=>{
       line.x1=0;
@@ -164,9 +156,6 @@ export class ViewExercise extends View {
       line.y2=0;
     })
     
-    //console.log(sc2)
-    //console.log(sc2[0])
-    //console.log(sc2.length)
     if(lines.length>0){
       for(let i=0;i<transformedScreenLines.length;i++){
         lines2[i].x1=transformedScreenLines[i][0][0];
@@ -178,12 +167,8 @@ export class ViewExercise extends View {
       circle[0].cx=174;
       circle[0].cy=125;
       let group = document.getElementById("item2").getElementById("group");
-      //console.log(group.groupTransform.rotate.angle)
       group.groupTransform.rotate.angle = -this.angle
 
-      let group = document.getElementById("ionic").getElementById("group");
-      //console.log(group.groupTransform.rotate.angle)
-      //group.groupTransform.rotate.angle = 90
     }else{
       let lines2 = document.getElementById("item2").getElementsByTagName("line");
       lines2.forEach(line=>{
@@ -223,7 +208,8 @@ export class ViewExercise extends View {
   onMount() {
     let text = readFileSync("polyline.txt", "cbor");
     this.data = JSON.parse(text);
-    console.log(this.data.screenCoords.length)
+    
+    //Draw global map
     let lines = document.getElementById("ionic").getElementsByTagName("line");
     lines.forEach(line=>{
       line.x1=0;
@@ -232,17 +218,12 @@ export class ViewExercise extends View {
       line.y2=0;
     })
     
-    //Limit to 100 points otherwise Error:Jerryscript out of memory.
-    //Must be improved : https://github.com/gaperton/ionic-views/blob/master/docs/optimization-guidelines.md
-    let sc = this.data.screenCoords.filter((elt,i,arr)=>i%(parseInt(arr.length/100)+1)===0);
-    for(let i=0;i<sc.length-1;i++){
-      lines[i].x1=sc[i][0];
-      lines[i].y1=sc[i][1];
-      lines[i].x2=sc[i+1][0];
-      lines[i].y2=sc[i+1][1];
+    for(let i=0;i<this.data.screenCoords.length-1;i++){
+      lines[i].x1=this.data.screenCoords[i][0];
+      lines[i].y1=this.data.screenCoords[i][1];
+      lines[i].x2=this.data.screenCoords[i+1][0];
+      lines[i].y2=this.data.screenCoords[i+1][1];
     }
-
-
 
 
     utils.hide(this.btnFinish);
