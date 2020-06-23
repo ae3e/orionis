@@ -6,10 +6,11 @@ function settingsComponent(props) {
       <Section
         title={
           <Text bold align="center">
-            App Settings
+            Orionis Settings
           </Text>
 
         }
+        description={<Text> Read the <Link source="https://github.com/ae3e/orionis#readme">user's guide</Link></Text>}
       >
         {/*<TextInput
           label="polyline"
@@ -44,7 +45,26 @@ function settingsComponent(props) {
           }}
         />
 
-        <Text>{props.settings.route ? JSON.parse(props.settings.route).name : ''}</Text>
+        <TextInput
+          label="Choose a route"
+          settingsKey="route"
+          placeholder="Type route's name"
+          action="Add"
+          onChange={()=> props.settingsStorage.setItem("message","Route changed")}
+          onAutocomplete={async (value)=>{
+            
+            let strava = JSON.parse(props.settings.strava);
+            let response = await fetch('https://www.strava.com/api/v3/athletes/' + strava.athlete.id + '/routes?page=1&per_page=30', {
+              headers: {
+                "Authorization": "Bearer " + strava.access_token
+              }
+            })
+
+            let routes = await response.json()
+            let data = routes.map(obj=>{return{name:obj.name,value:obj.id_str}});
+            return data.filter((option) => option.name.includes(value));
+          }}
+        />
 
         <Button
           label="Update"
@@ -53,6 +73,8 @@ function settingsComponent(props) {
 
           }}
         />
+
+        <Text>{props.settings.message}</Text>
 
         {/*
         //Try to find a a way to logout

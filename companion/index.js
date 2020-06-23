@@ -5,6 +5,7 @@ import { encode } from 'cbor';
 import * as env from '../env.js'
 import simplify from 'simplify-js'
 
+settingsStorage.setItem("message", "No message");
 
 settingsStorage.onchange = async function (evt) {
 
@@ -18,17 +19,20 @@ settingsStorage.onchange = async function (evt) {
     settingsStorage.setItem("strava", JSON.stringify(strava))
   }
 
-  if (strava && evt.key === 'refresh') {
-    transferFile();
+  let route = JSON.parse(settingsStorage.getItem("route"))
+
+  if (strava && route.value && evt.key === 'refresh') {
+    transferFile(route.value);
   }
 }
 
-async function transferFile() {
+async function transferFile(id_str) {
 
-  let routes = await getRoutes()
-  if(routes.length>0 && routes.filter(elt => elt.starred).length>0){
-    //Use id_str instead of id : https://groups.google.com/forum/#!topic/strava-api/4HkuGf0-_ss
-    let route = await getRoute(routes.filter(elt => elt.starred)[0].id_str);
+    
+  //Use id_str instead of id : https://groups.google.com/forum/#!topic/strava-api/4HkuGf0-_ss
+  let route = await getRoute(id_str);
+
+  if(!route.message){
 
     //Decodepolyline, convert lat,long to mercator coords then to screen coords
     let MercatorCoords = decodePolyline(route.map.polyline).map(elt => degrees2meters(elt[1], elt[0]))
@@ -57,8 +61,9 @@ async function transferFile() {
       // Failed to queue
       throw new Error("Failed to queue polyline.txt. Error: " + error);
     });
+  }else{
+    settingsStorage.setItem('message', route.message);
   }
-  
 }
 
 //Get Strava routes
@@ -84,7 +89,7 @@ async function getRoute(id) {
     }
   })
   let data = await response.json()
-  settingsStorage.setItem('route', JSON.stringify(data))
+  settingsStorage.setItem('message', data.message?message:"Successfully downloaded.")
   return data;
 }
 
