@@ -11,7 +11,7 @@ settingsStorage.onchange = async function (evt) {
 
   let strava = JSON.parse(settingsStorage.getItem("strava"))
 
-  if (strava.expires_at < new Date().getTime() / 1000) {
+  if (strava && strava.expires_at < new Date().getTime() / 1000) {
     let data = await getRefreshedToken();
     strava.expires_at = data.expires_at;
     strava.access_token = data.access_token;
@@ -21,7 +21,7 @@ settingsStorage.onchange = async function (evt) {
 
   let route = JSON.parse(settingsStorage.getItem("route"))
 
-  if (strava && route.value && evt.key === 'refresh') {
+  if (strava && route && route.value && evt.key === 'refresh') {
     transferFile(route.value);
   }
 }
