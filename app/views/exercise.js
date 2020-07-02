@@ -256,26 +256,13 @@ export class ViewExercise extends View {
       this.lblSpeedAvg.text = speedAvg.value;
       this.lblSpeedAvgUnits.text = `speed avg ${speedAvg.units}`;
 
-      let sec = (speed.value && speed.value>1)?Math.round(3600/speed.value):0;
-      
-
-      //Math.trunc doesn't work??
-      const trunc = (n, decimalPlaces) => {
-        const decimals = decimalPlaces ? decimalPlaces : 2;
-        const asString = n.toString();
-        const pos = asString.indexOf('.') != -1 ? asString.indexOf('.') + decimals + 1 : asString.length;
-        return parseFloat(n.toString().substring(0, pos));
-      };
-
-      let min = parseInt((sec/60).toString().split('.')[0]);
-
-      const pace = {value: min+':'+(sec-min*60), units:"mpk"};
+      const pace = utils.convertSpeedToPace(speed);
       this.lblPace.text = pace.value;
       this.lblPaceUnits.text = `pace ${pace.units}`;
 
       const distance = utils.formatDistance(exercise.stats.distance);
       this.lblDistance.text = distance.value;
-      this.lblDistanceUnits.text = `distance ${distance.units==='kilometers'?'km':'miles'}`;
+      this.lblDistanceUnits.text = `distance ${distance.units}`;
 
       this.lblActiveTime.text = utils.formatActiveTime(exercise.stats.activeTime);
 

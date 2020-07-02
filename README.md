@@ -47,3 +47,8 @@ I do not make any warranties about completeness, reliability and accuracy of thi
 2. `env.js.example` file must be renamed `env.js` and modified (adjust Strava's `clientId` and `clientSecret` values).
 
 2. Run command `npx fitbit` then `bi` (`build` and `install`)
+
+## Test
+2020-07-02
+- Ionic v27.33.1.30
+- Fitbit App v3.4.2 (20213455)

@@ -57,7 +57,7 @@ export function formatSpeed(speed) {
  * @return {object}
  */
 export function formatDistance(distance) {
-  return convertMetersToMilesOrKilometers(distance, "kilometers", "miles");
+  return convertMetersToMilesOrKilometers(distance, "km", "mi");
 }
 
 /** @description Formats the time spent in milliseconds into mm:ss or hh:mm:ss.
@@ -109,4 +109,16 @@ export function convertMetersToMilesOrKilometers(meters, unitK, unitM) {
     value: val.toFixed(2),
     units: u
   };
+}
+
+/** @description Convert speed to pace.
+ * @param {number} speed The speed in kph or mph.
+ * @return {object}
+ */
+export function convertSpeedToPace(speed) {
+  let millisec = (speed.value && speed.value>1)?Math.round(3600/speed.value*1000):0;
+  return {
+    value : formatActiveTime(millisec),
+    units : units.distance === "us"? "mpm":"mpk"
+  }
 }
