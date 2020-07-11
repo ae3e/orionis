@@ -106,7 +106,7 @@ export function convertMetersToMilesOrKilometers(meters, unitK, unitM) {
     u = unitM;
   }
   return {
-    value: val.toFixed(2),
+    value: val.toFixed(1),
     units: u
   };
 }

@@ -284,7 +284,6 @@ export class ViewExercise extends View {
         this.newCadence = parseInt((this.stepsHistory[period] - this.stepsHistory[0]) * 60/period); // Calculate current cadence
         this.stepsHistory.shift();
       }
-      console.log(new Date().getSeconds()+' '+today.local.steps+' '+this.newCadence)
       
       this.lblCadence.text = this.newCadence;
       this.lblCadenceUnits.text = `cadence spm`;
