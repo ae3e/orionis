@@ -14,6 +14,7 @@ import { today } from "user-activity";
 
 import { readFileSync } from "fs";
 import {degrees2meters, convertToScreenCoords} from "../../common/lib";
+import Altitude from '../subviews/altitude';
 
 const $ = $at("#view-exercise");
 
@@ -245,6 +246,9 @@ export class ViewExercise extends View {
 
     this.gps = new GPS("#subview-gps2", this.handleLocationSuccess);
     this.insert(this.gps);
+
+    this.altitude = new Altitude("#subview-altitude");
+    this.insert(this.altitude);
 
     this.btnToggle.addEventListener("click", this.handleToggle);
     this.btnFinish.addEventListener("click", this.handleFinish);

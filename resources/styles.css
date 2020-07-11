@@ -58,3 +58,10 @@ text {
 #subview-hrm .label {
   y: $-22;
 }
+
+#lblAltitudeUnits {
+  font-size: 16;
+  fill: fb-yellow;
+  text-length: 66;
+  y: $-22;
+}

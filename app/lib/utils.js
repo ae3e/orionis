@@ -122,3 +122,26 @@ export function convertSpeedToPace(speed) {
     units : units.distance === "us"? "mpm":"mpk"
   }
 }
+
+  // Converts 
+  // Convert pressure in millibars into altitude according the user preference for meters or feet.
+/** @description Converts a number in millibars into either meters or feet.
+ * Returns an object containing a value and units.
+ * @param {number} meters The amount of millibars to convert.
+ * @param {string} unitM The units to return if the value is meters.
+ * @param {string} unitF The units to return if the value is feet.
+ * @return {object}
+ */
+  // https://en.wikipedia.org/wiki/Pressure_altitude
+  export function convertPressureToAltitude(pressure, unitM, unitF) {
+    let val = (1 - (pressure/1013.25)**0.190284)*145366.45;
+    let u = unitF;
+    if (units.distance !== "us") {
+      val *= 0.3048;
+      u = unitM;
+    }
+    return {
+      value: val.toFixed(0),
+      units: u
+    };
+  }

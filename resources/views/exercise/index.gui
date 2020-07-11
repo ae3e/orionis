@@ -46,6 +46,9 @@
           <text id="lblCadence" class="bignumber">0</text>
           <text id="lblCadenceUnits" class="label">cadence spm</text>
         </svg>
+        <svg class="item row1">
+          <use id="subview-altitude" href="#subview-altitude" />
+        </svg>
       </svg>
 
       <text id="lblStatus" />

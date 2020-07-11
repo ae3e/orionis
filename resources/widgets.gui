@@ -61,6 +61,11 @@
       <text id="lblHrm" class="bignumber">--</text>
       <text class="label">heart rate</text>
     </symbol>
+
+    <symbol id="subview-altitude">
+      <text id="lblAltitude" class="bignumber">--</text>
+      <text id="lblAltitudeUnits">altitude ft</text>
+    </symbol>
   </defs>
 
 
