@@ -1,6 +1,6 @@
 {
   "name": "orionis",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "license": "UNLICENSED",
   "devDependencies": {
@@ -32,7 +32,6 @@
     "debug": "fitbit"
   },
   "dependencies": {
-    "d3": "^5.15.0",
     "simplify-js": "^1.2.4"
   }
 }

@@ -9,6 +9,9 @@ import GPS from "../subviews/gps";
 import HRM from "../subviews/hrm";
 import Popup from "../subviews/popup";
 
+//Used to calculate cadence
+import { today } from "user-activity";
+
 import { readFileSync } from "fs";
 import {degrees2meters, convertToScreenCoords} from "../../common/lib";
 
@@ -31,11 +34,14 @@ export class ViewExercise extends View {
   lblDistance = $("#lblDistance");
   lblDistanceUnits = $("#lblDistanceUnits");
   lblActiveTime = $("#lblActiveTime");
-  lblCalories = $("#lblCalories");
+  lblCadence = $("#lblCadence");
+  lblCadenceUnits = $("#lblCadenceUnits");
 
   data = null; //data in transfered file
   prevPosition = null; //used with currentPosition to calculate orientation
   angle = 0; //used to rotate local map
+
+  stepsHistory = [parseInt(today.local.steps)];
 
   handlePopupNo = () => {
     this.remove(this.popup);
@@ -265,6 +271,23 @@ export class ViewExercise extends View {
       this.lblDistanceUnits.text = `distance ${distance.units}`;
 
       this.lblActiveTime.text = utils.formatActiveTime(exercise.stats.activeTime);
+
+      /**
+       * To calculate cadence:
+       * 1. Store number of steps every seconds (because screen is refreshed every seconds)
+       * 2. Calculate number of steps in 10 sec
+       */
+      this.stepsHistory.push(parseInt(today.local.steps)); // Get current step count
+      var period = 10; //Number of seconds used to calculate cadence
+      this.newCadence = 0
+      if(this.stepsHistory.length===period+1){
+        this.newCadence = parseInt((this.stepsHistory[period] - this.stepsHistory[0]) * 60/period); // Calculate current cadence
+        this.stepsHistory.shift();
+      }
+      console.log(new Date().getSeconds()+' '+today.local.steps+' '+this.newCadence)
+      
+      this.lblCadence.text = this.newCadence;
+      this.lblCadenceUnits.text = `cadence spm`;
 
       //this.lblCalories.text = utils.formatCalories(exercise.stats.calories);
     }

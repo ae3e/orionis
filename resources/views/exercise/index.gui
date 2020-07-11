@@ -40,6 +40,14 @@
         </svg>
       </svg>
 
+      <svg id="boxStats3">
+        <!-- <rect x="0"   y="0" width="100%" height="100%" fill="blue" opacity=".5" /> -->
+        <svg class="item"  id="cadence">
+          <text id="lblCadence" class="bignumber">0</text>
+          <text id="lblCadenceUnits" class="label">cadence spm</text>
+        </svg>
+      </svg>
+
       <text id="lblStatus" />
 
       <use id="btnFinish" href="#combo-button-upper-right" display="none" fill="fb-green" shortcut="none">

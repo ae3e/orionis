@@ -8,14 +8,21 @@
 #boxStats {
   x: 8;
   y: 40;
-  width: 50%-8;
+  width: 33%-8;
   height: 40;
 }
 
 #boxStats2 {
-  x: 50%+8;
+  x: 33%+8;
   y: 40;
-  width: 50%-8;
+  width: 33%-8;
+  height: 40;
+}
+
+#boxStats3 {
+  x: 66%+8;
+  y: 40;
+  width: 33%-8;
   height: 40;
 }
 
