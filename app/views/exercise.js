@@ -11,6 +11,7 @@ import Popup from "../subviews/popup";
 
 //Used to calculate cadence
 import { today } from "user-activity";
+//import { minuteHistory } from "user-activity";
 
 import { readFileSync } from "fs";
 import {degrees2meters, convertToScreenCoords} from "../../common/lib";
@@ -43,6 +44,8 @@ export class ViewExercise extends View {
   angle = 0; //used to rotate local map
 
   stepsHistory = [parseInt(today.local.steps)];
+  cadence = 0;
+  period = 10; //Number of seconds used to calculate cadence
 
   handlePopupNo = () => {
     this.remove(this.popup);
@@ -189,6 +192,28 @@ export class ViewExercise extends View {
 
   handleRefresh = () => {
     this.render();
+
+    /**
+    * To calculate cadence (do calculation even is display is off otherwise):
+    * 1. Store number of steps every seconds (because handleRefresh is called every seconds as callback in Clock class)
+    * 2. Calculate number of steps in 10 sec
+    */
+    this.stepsHistory.push(parseInt(today.local.steps)); // Get current step count
+
+
+    //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator 
+    /*if(minuteHistory){
+      const minuteRecords = minuteHistory.query({ limit: 1 }) || [];
+      this.newCadence = minuteRecords[0].steps || 0
+      console.log(minuteRecords[0].steps)
+    }else{
+      this.newCadence = 0
+    }*/
+    
+    if(this.stepsHistory.length===this.period){
+      this.cadence = parseInt((this.stepsHistory[this.period-1] - this.stepsHistory[0]) * 60/this.period); // Calculate current cadence
+      this.stepsHistory.shift();
+    }
   }
 
   handleButton = (evt) => {
@@ -276,20 +301,7 @@ export class ViewExercise extends View {
 
       this.lblActiveTime.text = utils.formatActiveTime(exercise.stats.activeTime);
 
-      /**
-       * To calculate cadence:
-       * 1. Store number of steps every seconds (because screen is refreshed every seconds)
-       * 2. Calculate number of steps in 10 sec
-       */
-      this.stepsHistory.push(parseInt(today.local.steps)); // Get current step count
-      var period = 10; //Number of seconds used to calculate cadence
-      this.newCadence = 0
-      if(this.stepsHistory.length===period+1){
-        this.newCadence = parseInt((this.stepsHistory[period] - this.stepsHistory[0]) * 60/period); // Calculate current cadence
-        this.stepsHistory.shift();
-      }
-      
-      this.lblCadence.text = this.newCadence;
+      this.lblCadence.text = this.cadence;
       this.lblCadenceUnits.text = `cadence spm`;
 
       //this.lblCalories.text = utils.formatCalories(exercise.stats.calories);
