@@ -47,6 +47,8 @@ export class ViewExercise extends View {
   cadence = 0;
   period = 10; //Number of seconds used to calculate cadence
 
+  refreshIntervalId = null;
+
   handlePopupNo = () => {
     this.remove(this.popup);
   };
@@ -192,28 +194,6 @@ export class ViewExercise extends View {
 
   handleRefresh = () => {
     this.render();
-
-    /**
-    * To calculate cadence (do calculation even is display is off otherwise):
-    * 1. Store number of steps every seconds (because handleRefresh is called every seconds as callback in Clock class)
-    * 2. Calculate number of steps in 10 sec
-    */
-    this.stepsHistory.push(parseInt(today.local.steps)); // Get current step count
-
-
-    //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator 
-    /*if(minuteHistory){
-      const minuteRecords = minuteHistory.query({ limit: 1 }) || [];
-      this.newCadence = minuteRecords[0].steps || 0
-      console.log(minuteRecords[0].steps)
-    }else{
-      this.newCadence = 0
-    }*/
-    
-    if(this.stepsHistory.length===this.period){
-      this.cadence = parseInt((this.stepsHistory[this.period-1] - this.stepsHistory[0]) * 60/this.period); // Calculate current cadence
-      this.stepsHistory.shift();
-    }
   }
 
   handleButton = (evt) => {
@@ -238,6 +218,36 @@ export class ViewExercise extends View {
   }
 
   onMount() {
+    this.refreshIntervalId = setInterval(() => {
+
+      /**
+       * IMPORTANT (https://community.fitbit.com/t5/SDK-Development/When-the-screen-is-off-app-is-not-running/td-p/3500836#) :
+       * Your app stays running unless another app is started. However, ontick events don't occur when the screen is off.
+       * is there a way to make ontick events occur if the screen is off?
+       * No, but you can still respond to other events and/or use setInterval()/setTimeout().
+       * 
+       * So, to calculate cadence (calculation is done only if display is on):
+       * 1. Store number of steps every seconds (because handleRefresh is called every seconds as callback in Clock class)
+       * 2. Calculate number of steps in 10 sec
+      */
+      //console.log(today.local.steps);
+      this.stepsHistory.push(parseInt(today.local.steps)); // Get current step count
+
+
+      //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator 
+      /*if(minuteHistory){
+        const minuteRecords = minuteHistory.query({ limit: 1 }) || [];
+        this.newCadence = minuteRecords[0].steps || 0
+        console.log(minuteRecords[0].steps)
+      }else{
+        this.newCadence = 0
+      }*/
+      
+      if(this.stepsHistory.length===this.period){
+        this.cadence = parseInt((this.stepsHistory[this.period-1] - this.stepsHistory[0]) * 60/this.period); // Calculate current cadence
+        this.stepsHistory.shift();
+      }
+    }, 1000);
     let text = readFileSync("polyline.txt", "cbor");
     this.data = JSON.parse(text);
     
@@ -278,6 +288,7 @@ export class ViewExercise extends View {
     this.btnToggle.addEventListener("click", this.handleToggle);
     this.btnFinish.addEventListener("click", this.handleFinish);
     document.addEventListener("keypress", this.handleButton);
+
   }
 
   onRender() {
@@ -309,7 +320,7 @@ export class ViewExercise extends View {
   }
 
   onUnmount() {
-
+    clearInterval(this.refreshIntervalId);
     this.btnToggle.removeEventListener("click", this.handleToggle);
     this.btnFinish.removeEventListener("click", this.handleFinish);
     document.removeEventListener("keypress", this.handleButton);
