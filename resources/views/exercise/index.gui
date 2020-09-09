@@ -14,9 +14,9 @@
         <svg class="item">
           <use id="subview-hrm" href="#subview-hrm" />
         </svg>
-        <svg class="item row1"  id="speed">
-          <text id="lblSpeed" class="bignumber">0.0</text>
-          <text id="lblSpeedUnits" class="label">speed kph</text>
+        <svg class="item row1"  id="avghr">
+          <text id="lblHrAvg" class="bignumber">0</text>
+          <text class="label">hr avg bpm</text>
         </svg>
         <svg class="item row2" id="distance">
           <text id="lblDistance" class="bignumber">0</text>
@@ -26,9 +26,9 @@
 
       <svg id="boxStats2">
         <!-- <rect x="0"   y="0" width="100%" height="100%" fill="blue" opacity=".5" /> -->
-        <svg class="item"  id="pace">
-          <text id="lblPace" class="bignumber">0:00</text>
-          <text id="lblPaceUnits" class="label">pace mpk</text>
+        <svg class="item"  id="speed">
+          <text id="lblSpeed" class="bignumber">0.0</text>
+          <text id="lblSpeedUnits" class="label">speed kph</text>
         </svg>
         <svg class="item row1" id="avgspeed">
           <text id="lblSpeedAvg" class="bignumber">0.0</text>
@@ -42,12 +42,13 @@
 
       <svg id="boxStats3">
         <!-- <rect x="0"   y="0" width="100%" height="100%" fill="blue" opacity=".5" /> -->
-        <svg class="item"  id="cadence">
-          <text id="lblCadence" class="bignumber">0</text>
-          <text id="lblCadenceUnits" class="label">cadence spm</text>
+        <svg class="item"  id="pace">
+          <text id="lblPace" class="bignumber">0:00</text>
+          <text id="lblPaceUnits" class="label">pace mpk</text>
         </svg>
-        <svg class="item row1">
-          <use id="subview-altitude" href="#subview-altitude" />
+        <svg class="item row1" id="paceAvg">
+          <text id="lblPaceAvg" class="bignumber">0:00</text>
+          <text id="lblPaceAvgUnits" class="label">pace avg mpk</text>
         </svg>
       </svg>
 
@@ -72,6 +73,32 @@
       <use id="popup" href="#subview-popup" display="none" />
     </use>
 
+    <use id="runStats" href="#panoramaview-item">
+      <svg id="boxStats2">
+        <!-- <rect x="0"   y="0" width="100%" height="100%" fill="blue" opacity=".5" /> -->
+        <svg class="item"  id="cadence">
+          <text id="lblCadence" class="bignumber">0</text>
+          <text class="label">cadence spm</text>
+        </svg>
+        <svg class="item row1"  id="lastminutecadence">
+          <text id="lblLastMinuteCadence" class="bignumber">0</text>
+          <text class="label">last minute cadence spm</text>
+        </svg>
+        <svg class="item row2"  id="cadenceavg">
+          <text id="lblCadenceAvg" class="bignumber">0</text>
+          <text class="label">cadence avg spm</text>
+        </svg>
+      </svg>
+    </use>
+
+    <use id="altitudeStats" href="#panoramaview-item">
+      <svg id="boxStats3">
+        <svg class="item row1">
+          <use id="subview-altitude" href="#subview-altitude" />
+        </svg>
+      </svg>
+    </use>
+
     <use id="ionic" href="#panoramaview-item">
       <use id="my-global-map" href="#global-map" />
     </use>
@@ -80,11 +107,14 @@
       <use id="my-local-map" href="#global-map" />
     </use>
     
+
     <!-- Have enough pagination dots for your slides (extras are hidden) -->
     <use id="pagination-dots" href="#pagination-widget" y="100%-12">
       <use href="#pagination-dot" />
       <use href="#pagination-dot" />
       <use href="#pagination-dot" />
+      <use href="#pagination-dot" />
+      <use id="dottest" href="#pagination-dot" />
       <use href="#pagination-highlight-dot" />
     </use>
   </use>

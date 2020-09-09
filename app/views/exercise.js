@@ -11,7 +11,7 @@ import Popup from "../subviews/popup";
 
 //Used to calculate cadence
 import { today } from "user-activity";
-//import { minuteHistory } from "user-activity";
+import { minuteHistory } from "user-activity";
 
 import { readFileSync } from "fs";
 import {degrees2meters, convertToScreenCoords} from "../../common/lib";
@@ -27,16 +27,21 @@ export class ViewExercise extends View {
   lblStatus = $("#lblStatus");
 
   elBoxStats = $("#boxStats");
+  lblHrAvg = $("#lblHrAvg");
   lblSpeed = $("#lblSpeed");
   lblSpeedUnits = $("#lblSpeedUnits");
   lblSpeedAvg = $("#lblSpeedAvg");
   lblSpeedAvgUnits = $("#lblSpeedAvgUnits");
   lblPace = $("#lblPace");
   lblPaceUnits = $("#lblPaceUnits");
+  lblPaceAvg = $("#lblPaceAvg");
+  lblPaceAvgUnits = $("#lblPaceAvgUnits");
   lblDistance = $("#lblDistance");
   lblDistanceUnits = $("#lblDistanceUnits");
   lblActiveTime = $("#lblActiveTime");
   lblCadence = $("#lblCadence");
+  lblLastMinuteCadence = $("#lblLastMinuteCadence");
+  lblCadenceAvg = $("#lblCadenceAvg");
   lblCadenceUnits = $("#lblCadenceUnits");
 
   data = null; //data in transfered file
@@ -45,6 +50,7 @@ export class ViewExercise extends View {
 
   stepsHistory = [parseInt(today.local.steps)];
   cadence = 0;
+  lastMinuteCadence = 0;
   period = 10; //Number of seconds used to calculate cadence
 
   refreshIntervalId = null;
@@ -232,16 +238,6 @@ export class ViewExercise extends View {
       */
       //console.log(today.local.steps);
       this.stepsHistory.push(parseInt(today.local.steps)); // Get current step count
-
-
-      //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator 
-      /*if(minuteHistory){
-        const minuteRecords = minuteHistory.query({ limit: 1 }) || [];
-        this.newCadence = minuteRecords[0].steps || 0
-        console.log(minuteRecords[0].steps)
-      }else{
-        this.newCadence = 0
-      }*/
       
       if(this.stepsHistory.length===this.period){
         this.cadence = parseInt((this.stepsHistory[this.period-1] - this.stepsHistory[0]) * 60/this.period); // Calculate current cadence
@@ -294,6 +290,8 @@ export class ViewExercise extends View {
   onRender() {
     if (exercise && exercise.stats) {
 
+      this.lblHrAvg.text = exercise.stats.heartRate.average || '-';
+
       const speed = utils.formatSpeed(exercise.stats.speed.current);
       this.lblSpeed.text = speed.value;
       this.lblSpeedUnits.text = `speed ${speed.units}`;
@@ -306,6 +304,10 @@ export class ViewExercise extends View {
       this.lblPace.text = pace.value;
       this.lblPaceUnits.text = `pace ${pace.units}`;
 
+      const paceAvg = utils.convertSpeedToPace(speedAvg);
+      this.lblPaceAvg.text = paceAvg.value;
+      this.lblPaceAvgUnits.text = `pace avg ${paceAvg.units}`;
+
       const distance = utils.formatDistance(exercise.stats.distance);
       this.lblDistance.text = distance.value;
       this.lblDistanceUnits.text = `distance ${distance.units}`;
@@ -313,7 +315,15 @@ export class ViewExercise extends View {
       this.lblActiveTime.text = utils.formatActiveTime(exercise.stats.activeTime);
 
       this.lblCadence.text = this.cadence;
-      this.lblCadenceUnits.text = `cadence spm`;
+      //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator 
+      if(minuteHistory){
+        const minuteRecords = minuteHistory.query({ limit: 1 }) || [];
+        this.lastMinuteCadence = minuteRecords[0].steps || 0
+      }else{
+        this.lastMinuteCadence = 0
+      }
+      this.lblLastMinuteCadence.text = this.lastMinuteCadence;
+      this.lblCadenceAvg.text = parseInt(exercise.stats.steps/(exercise.stats.activeTime/1000)*60);
 
       //this.lblCalories.text = utils.formatCalories(exercise.stats.calories);
     }
