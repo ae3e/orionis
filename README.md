@@ -46,7 +46,20 @@ I do not make any warranties about completeness, reliability and accuracy of thi
 
 2. `env.js.example` file must be renamed `env.js` and modified (adjust Strava's `clientId` and `clientSecret` values).
 
-2. Run command `npx fitbit` then `bi` (`build` and `install`)
+3. Run command `npx fitbit` then `bi` (`build` and `install`)
+
+### Dev issue
+Bug with OS Simulator 0.8.3 : Unable to Interact with Touch Screen
+- https://community.fitbit.com/t5/SDK-Development/Fitbit-OS-Simulator/m-p/4487174#M13104
+- https://community.fitbit.com/t5/SDK-Development/Unable-to-Interact-with-Touch-Screen-on-Fitbit-Simulator/m-p/4483332#M13072
+
+To solve this issue, I downgraded OS Simulator 0.8.2 (https://simulator-updates.fitbit.com/Fitbit%20OS%20Simulator-latest-0.8.2.exe)
+and to avoid auto-update, I set a wrong url in C:\Users\XXX\AppData\Local\Programs\@fitbitsimulator\resources\app-udate.yml
+
+About OS Simulator :
+- Update folder : C:\Users\XXX\AppData\Local\@fitbitsimulator-updater
+- Installation folder : C:\Users\XXX\AppData\Local\Programs\@fitbitsimulator
+- Config and projects fodlers : C:\Users\mangeot-a\AppData\Roaming\Fitbit OS Simulator
 
 ## Test
 2020-07-02
