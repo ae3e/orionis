@@ -92,9 +92,33 @@
     </use>
 
     <use id="altitudeStats" href="#panoramaview-item">
+      <svg id="boxStats">
+        <svg class="item">
+          <use id="subview-altitude" href="#subview-altitude" />
+        </svg>
+        <svg class="item row1">
+          <text id="lblAltitudeMin" class="bignumber">0</text>
+          <text id="lblAltitudeMinUnits" class="label">min m</text>
+        </svg>
+        <svg class="item row2">
+          <text id="lblAltitudeMax" class="bignumber">0</text>
+          <text id="lblAltitudeMaxUnits" class="label">max m</text>
+        </svg>
+      </svg>
+      <svg id="boxStats2">
+        <svg class="item row1">
+          <text id="lblAltitudeGain" class="bignumber">0</text>
+          <text id="lblAltitudeGainUnits" class="label">Gain m</text>
+        </svg>
+        <svg class="item row2">
+          <text id="lblAltitudeLoss" class="bignumber">0</text>
+          <text id="lblAltitudeLossUnits" class="label">Loss m</text>
+        </svg>
+      </svg>
       <svg id="boxStats3">
         <svg class="item row1">
-          <use id="subview-altitude" href="#subview-altitude" />
+          <text id="lblAltitudeGainFB" class="bignumber">0</text>
+          <text id="lblAltitudeGainUnits" class="label">Gain (Fitbit) m</text>
         </svg>
       </svg>
     </use>

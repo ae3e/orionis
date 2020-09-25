@@ -11,7 +11,7 @@ import Popup from "../subviews/popup";
 
 //Used to calculate cadence
 import { today } from "user-activity";
-import { minuteHistory } from "user-activity";
+import { minuteHistory, dayHistory } from "user-activity";
 
 import { readFileSync } from "fs";
 import {degrees2meters, convertToScreenCoords} from "../../common/lib";
@@ -43,6 +43,8 @@ export class ViewExercise extends View {
   lblLastMinuteCadence = $("#lblLastMinuteCadence");
   lblCadenceAvg = $("#lblCadenceAvg");
   lblCadenceUnits = $("#lblCadenceUnits");
+
+  lblAltitudeGainFB = $("#lblAltitudeGainFB");
 
   data = null; //data in transfered file
   prevPosition = null; //used with currentPosition to calculate orientation
@@ -315,7 +317,10 @@ export class ViewExercise extends View {
       this.lblActiveTime.text = utils.formatActiveTime(exercise.stats.activeTime);
 
       this.lblCadence.text = this.cadence;
-      //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator 
+      //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator
+      console.log(dayHistory)
+      //console.log(dayHistory.query())
+      //console.log(dayHistory.query()[0])
       if(minuteHistory){
         const minuteRecords = minuteHistory.query({ limit: 1 }) || [];
         this.lastMinuteCadence = minuteRecords[0].steps || 0
@@ -325,6 +330,7 @@ export class ViewExercise extends View {
       this.lblLastMinuteCadence.text = this.lastMinuteCadence;
       this.lblCadenceAvg.text = parseInt(exercise.stats.steps/(exercise.stats.activeTime/1000)*60);
 
+      this.lblAltitudeGainFB.text = exercise.stats.elevationGain;
       //this.lblCalories.text = utils.formatCalories(exercise.stats.calories);
     }
   }
