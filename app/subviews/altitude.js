@@ -14,12 +14,13 @@ export default class Altitude extends View {
     this.units = $("#lblAltitudeUnits")
 
     const $2 = $at("#view-exercise");
-    this.lblAltitudeMin = $2("#lblAltitudeMin");
-    this.lblAltitudeMax = $2("#lblAltitudeMax");
-    this.lblAltitudeGain = $2("#lblAltitudeGain");
-    this.lblAltitudeLoss = $2("#lblAltitudeLoss");
+    this.lblAltitudeMin = $2("#lblAltitudeMinBaro");
+    this.lblAltitudeMax = $2("#lblAltitudeMaxBaro");
+    this.lblAltitudeGain = $2("#lblAltitudeGainBaro");
+    //this.lblAltitudeLoss = $2("#lblAltitudeLoss");
     //this.lblAltitudeMinUnits = $("#lblAltitudeMinUnits");
 
+    this.prepreviousAltitude = null;
     this.previousAltitude = null;
     this.currentAltitude = null;
     this.altitudeMin = null;
@@ -31,12 +32,13 @@ export default class Altitude extends View {
 
   onMount() {
     this.refreshIntervalId = setInterval(() => {
+      this.prepreviousAltitude = this.previousAltitude;
       this.previousAltitude = this.currentAltitude;
       this.currentAltitude = utils.convertPressureToAltitude(this.bar.pressure / 100,"m","ft")
-      if(this.previousAltitude){
+      if(this.prepreviousAltitude && this.previousAltitude){
         //console.log(this.currentAltitude.value+' '+this.previousAltitude.value || 0)
-        let diff = this.previousAltitude.value - this.currentAltitude.value;
-        diff>0?this.altitudeGain+=diff:this.altitudeLoss+=diff
+        let diff = this.prepreviousAltitude.value - this.currentAltitude.value;
+        diff<0?this.altitudeGain+=diff:this.altitudeLoss+=diff
         if(!this.altitudeMax)this.altitudeMax = this.currentAltitude.value
         if(!this.altitudeMin)this.altitudeMin = this.currentAltitude.value
         if(this.currentAltitude.value>this.altitudeMax)this.altitudeMax = this.currentAltitude.value
@@ -70,7 +72,7 @@ export default class Altitude extends View {
     this.lblAltitudeMin.text = this.altitudeMin;
     this.lblAltitudeMax.text = this.altitudeMax;
     this.lblAltitudeGain.text = this.altitudeGain;
-    this.lblAltitudeLoss.text = this.altitudeLoss;
+    //this.lblAltitudeLoss.text = this.altitudeLoss;
 
     //this.lblAltitudeMinUnits.text = `min ${altitude.units}`
     //console.log(this.altitudeMin+' '+this.altitudeMax+' '+this.altitudeGain+' '+this.altitudeLoss)

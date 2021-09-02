@@ -49,6 +49,8 @@ export class ViewExercise extends View {
   data = null; //data in transfered file
   prevPosition = null; //used with currentPosition to calculate orientation
   angle = 0; //used to rotate local map
+  previousAltitude=null;
+  altitudeGain=0;
 
   stepsHistory = [parseInt(today.local.steps)];
   cadence = 0;
@@ -130,6 +132,27 @@ export class ViewExercise extends View {
     this.lblStatus.text = "";
     //this.gps.callback = undefined;
 
+    console.log(position.coords.latitude+' '+position.coords.longitude+' '+position.coords.altitude+' '+position.coords.altitudeAccuracy)
+    //Update altitude
+    let altitudeGPS = document.getElementById("lblAltitudeGPS");
+    altitudeGPS.text = position.coords.altitude;
+    if(!this.altitudeMax)this.altitudeMax = position.coords.altitude
+    if(!this.altitudeMin)this.altitudeMin = position.coords.altitude
+    if(position.coords.altitude>this.altitudeMax)this.altitudeMax = position.coords.altitude
+    if(position.coords.altitude<this.altitudeMin)this.altitudeMin = position.coords.altitude
+    let altitudeMinGPS = document.getElementById("lblAltitudeMinGPS");
+    let altitudeMaxGPS = document.getElementById("lblAltitudeMaxGPS");
+    altitudeMinGPS.text = this.altitudeMin;
+    altitudeMaxGPS.text = this.altitudeMax;
+    
+    if(this.previousAltitude){
+      let diff = position.coords.altitude-this.previousAltitude.value;
+      if(diff>0)this.altitudeGain+=diff
+      let altitudeGainGPS = document.getElementById("lblAltitudeGainGPS");
+      altitudeGainGPS.text = this.altitudeGain;
+    }else{
+      this.previousAltitude = position.coords.altitude;
+    }
 
     let mercatorPosition = degrees2meters(position.coords.longitude,position.coords.latitude)
     let screenPosition = convertToScreenCoords([mercatorPosition],this.data.stats)
@@ -318,10 +341,11 @@ export class ViewExercise extends View {
 
       this.lblCadence.text = this.cadence;
       //Coudl use minuteHistory to get cadence of previous minute but must test minuteHistory because doesn't work with simulator
-      console.log(dayHistory)
-      //console.log(dayHistory.query())
-      //console.log(dayHistory.query()[0])
-      if(minuteHistory){
+      
+      if(minuteHistory && dayHistory){
+        console.log(dayHistory)
+        //console.log(dayHistory.query())
+        //console.log(dayHistory.query()[0])
         const minuteRecords = minuteHistory.query({ limit: 1 }) || [];
         this.lastMinuteCadence = minuteRecords[0].steps || 0
       }else{
